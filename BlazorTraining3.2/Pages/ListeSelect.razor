@@ -1,0 +1,24 @@
+﻿@page "/ListeSelect"
+<h3>ListeSelect</h3>
+<ul class="list-group">
+    @for (int i = 0; i < 7; i++)
+    {
+        int x = i;
+        <li class='list-group-item @(i%2==0?"list-group-item-info":"")' 
+            
+            @onclick="()=>select(x)">
+            @DateTime.Now.AddDays(i).ToString("dddd")
+        </li>
+    }
+</ul>
+@MyProperty
+@code {
+    public int MyProperty { get; set; }
+
+    void select(int i)
+    {
+        MyProperty = i;
+
+    }
+
+}

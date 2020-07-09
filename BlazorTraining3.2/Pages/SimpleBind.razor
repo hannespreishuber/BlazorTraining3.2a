@@ -1,0 +1,20 @@
+﻿@page "/simplebind"
+
+<h3>SimpleBind</h3>
+
+<input @bind-value="MyProperty" @bind-value:event="oninput"/>
+
+
+@MyProperty
+<hr />
+<input value="@MyProperty" @oninput="( _)=>MyProperty=_.Value.ToString()"/>
+
+
+@code {
+    public string MyProperty { get; set; }
+    void change()
+    {
+
+        
+    }
+}
