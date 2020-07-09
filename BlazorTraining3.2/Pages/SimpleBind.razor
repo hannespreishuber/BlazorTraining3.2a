@@ -4,7 +4,6 @@
 
 <input @bind-value="MyProperty" @bind-value:event="oninput"/>
 
-
 @MyProperty
 <hr />
 <input value="@MyProperty" @oninput="( _)=>MyProperty=_.Value.ToString()"/>
