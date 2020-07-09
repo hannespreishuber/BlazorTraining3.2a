@@ -1,0 +1,78 @@
+﻿@page "/todo"
+@using BlazorTraining3._2.Data
+@using System.Text.Json
+@inject IJSRuntime JSRuntime
+<h3>MyTodo</h3>
+
+<div class="input-group mb-3">
+    <input type="text" class="form-control" @bind="neuAufgabe">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button"
+                @onclick="AddAufgabe">
+            Add
+        </button>
+    </div>
+</div>
+
+<ul class="list-group">
+    @foreach (var item in Liste)
+    {
+        <li class="list-group-item" @key="item.ID">
+            @if (item.IsEdit)
+            {
+                <input class="form-control" @bind="item.Text"
+                       @onfocusout="()=>SaveListe(item)"/>
+            }
+            else
+            {
+            <span @onclick="()=>item.IsEdit=true">@item.Text</span>
+            }
+            
+        </li>
+
+    }
+
+</ul>
+
+@code {
+    public string neuAufgabe { get; set; }
+    public List<Aufgaben> Liste = new List<Aufgaben>();
+
+    void SaveListe(Aufgaben item)
+    {
+        item.IsEdit = false;
+        var daten = JsonSerializer.Serialize(Liste);
+        JSRuntime.InvokeVoidAsync("localStorage.setItem", "daten", daten);
+
+
+    }
+
+    void AddAufgabe()
+    {
+        var rnd = new Random();
+        var a = new Aufgaben()
+        {
+            Datum = DateTime.Now.AddDays(rnd.Next(29)),
+            Text = neuAufgabe,
+            ID = Liste.Count() + 1
+
+        };
+
+        Liste.Add(a);
+        neuAufgabe = "";
+
+        SaveListe(a);
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var daten = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "daten");
+            Liste = JsonSerializer.Deserialize<List<Aufgaben>>(daten);
+            StateHasChanged();
+        }
+    }
+
+}
