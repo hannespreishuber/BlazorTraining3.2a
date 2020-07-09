@@ -1,0 +1,17 @@
+﻿@page "/vm"
+
+<h3>ComponentVM</h3>
+
+@code {
+    public BlazorTraining3._2.Data.DummyVM VM { get; set; } = new Data.DummyVM();
+
+    protected override void OnInitialized()
+    {
+        VM.MyEvent += tollerHandler;
+
+    }
+    void tollerHandler()
+    {
+
+    }
+}
