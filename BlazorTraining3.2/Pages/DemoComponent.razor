@@ -1,0 +1,17 @@
+﻿@page "/demo"
+<h3>DemoComponent</h3>
+<input @bind="MyProperty" style="background-color:@MyProperty" />
+@MyProperty
+@MyRender
+
+@code {
+    public string MyProperty { get; set; }
+    RenderFragment MyRender
+
+
+
+protected override void OnInitialized()
+    {
+        // = @:(<p>Hallo</p>);
+    }
+}
