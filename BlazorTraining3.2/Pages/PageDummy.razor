@@ -1,0 +1,40 @@
+﻿@page "/pagedummy"
+@using System.Text.Json
+@inject IHttpClientFactory http
+<h3>PageDummy</h3>
+@if (Liste==null)
+{
+<p>Daten werden geladen....</p>
+}
+else
+{
+    <table class="table table-striped">
+        @foreach (var item in Liste)
+	{
+        <tr>
+            <td>@item.id</td>
+            <td>@item.title</td>
+            <td>@item.userId</td>
+        </tr>
+	}
+    </table>
+
+
+}
+@code {
+    public List<BlazorTraining3._2.Data.RestDummy> Liste { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var client = http.CreateClient();
+        var response=await client.GetAsync(@"https://jsonplaceholder.typicode.com/posts");
+        if (response.IsSuccessStatusCode)
+        {
+
+            using (var responsestream =await response.Content.ReadAsStreamAsync())
+            {
+                Liste =await JsonSerializer.DeserializeAsync<List<BlazorTraining3._2.Data.RestDummy>>(responsestream);
+            }
+        }
+
+    }
+}
