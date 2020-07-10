@@ -1,0 +1,38 @@
+﻿@page "/chatpage"
+@inject BlazorTraining3._2.Data.ChatVM VM
+<h3>Chatpage</h3>
+<div class="input-group mb-3">
+    <input type="text" class="form-control" @bind="neuNachricht">
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button"
+                @onclick="Add">
+            Add
+        </button>
+    </div>
+</div>
+
+<ul class="list-group">
+    @foreach (var item in VM.Nachrichten)
+    {
+        <li class="list-group-item" @key="@item">
+            @item
+        </li>
+    }
+</ul>
+
+@code {
+    public string neuNachricht { get; set; }
+
+    void Add()
+    {
+        VM.Add(neuNachricht);
+        neuNachricht = "";
+
+    }
+
+    protected override void OnInitialized()
+    {
+   
+        VM.OnUpdate += () =>InvokeAsync( StateHasChanged);
+    }
+}

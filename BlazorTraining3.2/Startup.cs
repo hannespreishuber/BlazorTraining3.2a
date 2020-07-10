@@ -29,6 +29,7 @@ namespace BlazorTraining3._2
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+            services.AddSingleton<ChatVM>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
