@@ -1,0 +1,14 @@
+﻿@page "/dropdown"
+<h3>dropdown</h3>
+<select>
+ 
+        @foreach (var Item in Enum.GetValues(typeof( DayOfWeek)))
+        {
+            <option value="@Item">@Item</option>
+        }
+   
+</select>
+@code {
+
+
+}

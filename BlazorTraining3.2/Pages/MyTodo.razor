@@ -21,13 +21,23 @@
             @if (item.IsEdit)
             {
                 <input class="form-control" @bind="item.Text"
-                       @onfocusout="()=>SaveListe(item)"/>
+                       @onfocusout="()=>SaveListe(item)" />
             }
             else
             {
-            <span @onclick="()=>item.IsEdit=true">@item.Text</span>
+                <div class="form-inline">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input"
+                               @bind="item.Erledigt" @onclick="()=>SaveListe(item)"
+                               id="customCheck@(item.ID)" name="example1">
+                        <label class="custom-control-label" for="customCheck@(item.ID)"></label>
+                    </div>
+                    <span @onclick="()=>item.IsEdit=true"
+                          style='@(item.Erledigt?"text-decoration-line:line-through":"")'
+                          >@item.Text</span>
+                </div>
             }
-            
+
         </li>
 
     }
@@ -35,6 +45,9 @@
 </ul>
 
 @code {
+
+    //Save bei Checkbox Bug... wegen Reihenfolge Events- aktuelle Änderung wird nicht gespeichert.
+    //workaround statt @bind oninput siehe simplebind.razor 
     public string neuAufgabe { get; set; }
     public List<Aufgaben> Liste = new List<Aufgaben>();
 
