@@ -1,0 +1,24 @@
+﻿@page "/dbtodo"
+@using BlazorTraining3._2.Data
+@inject BlazorTraining3._2.Data.TodoDBContext db
+<h3>dbTodo</h3>
+<ul class="list-group">
+    @foreach (var item in Liste)
+    {
+        <li class="list-group-item" @key="item.ID">
+            <span>@item.Text</span>
+        </li>
+    }
+</ul>
+@code {
+
+    public List<Aufgaben> Liste = new List<Aufgaben>();
+    protected override void OnInitialized()
+    {
+        Liste = db.Aufgabens.ToList();
+
+      //LINQ  db.Aufgabens.Where(x=>x.Erledigt==true)
+      
+    }
+
+}

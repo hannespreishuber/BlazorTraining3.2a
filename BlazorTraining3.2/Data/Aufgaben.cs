@@ -13,7 +13,7 @@ namespace BlazorTraining3._2.Data
         [Key]
         public int ID { get; set; }
         [StringLength(100,ErrorMessage ="max 100")]
-        [Required]
+        [Required(ErrorMessage ="schreib was rein")]
         public string Text { get; set; }
         public DateTime Datum { get; set; }
         public Boolean Erledigt { get; set; }
