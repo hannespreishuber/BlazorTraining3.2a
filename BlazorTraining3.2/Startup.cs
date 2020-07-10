@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BlazorTraining3._2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlazorTraining3._2
 {
@@ -31,7 +32,10 @@ namespace BlazorTraining3._2
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<ChatVM>();
             services.AddHttpClient();
-        }
+            services.AddDbContext<TodoDBContext>(o => o.UseSqlServer(Configuration.GetConnectionString("TodoConnectionString")));
+                
+                
+                }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
